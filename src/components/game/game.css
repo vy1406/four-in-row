@@ -1,3 +1,12 @@
+:root {
+    --player1-color: #ff7675;
+    --player2-color: #74b9ff;
+    --player1-highlighter: #fab1a0;
+    --player2-highlighter: #76afe9;
+    
+}
+
+
 .game{
     font-family: 'Indie Flower', cursive;
 }
@@ -24,8 +33,11 @@
     padding:25px;
 }
 
-.currentPlayer{
-    box-shadow:  0px 30px 18px  #81ecec ; 
+.highlight1{
+    box-shadow:  0px 30px 18px  var(--player1-highlighter);  
+}
+.highlight2{
+    box-shadow:  0px 30px 18px var(--player2-highlighter); 
 }
 
 .tie-dialog{
@@ -33,9 +45,9 @@
 }
 
 .player1-won-dialog{
-    background-color: #ff7675;
+    background-color: var(--player1-color);
 }
 
 .player2-won-dialog{
-    background-color: #74b9ff;
+    background-color: var(--player2-color); 
 }

@@ -67,6 +67,8 @@ class Game extends Component {
     checkEndGame = () => {
         let winner = ""
 
+       
+        
         winner = this.checkVertical()
         if (winner === "player1" || winner === "player2") this.showDialog(winner)
 
@@ -78,6 +80,9 @@ class Game extends Component {
 
         winner = this.checkDiagonalFromRight()
         if (winner === "player1" || winner === "player2") this.showDialog(winner)
+
+        winner = this.checkTie()
+        if (winner === "tie" ) this.showDialog(winner)
     }
 
     showDialog = winner => {
@@ -104,9 +109,9 @@ class Game extends Component {
     checkTie = () => {
         // check if all the cell are with player1 or player2
         let board = this.state.board
-        for (let row = 3; row < ROW_LIMIT; row++) {
-            for (let col = 3; col < COL_LIMIT; col++)
-                if (board[row][col] !== "player1" || board[row][col] !== "player1")
+        for (let row = 0; row < ROW_LIMIT; row++) {
+            for (let col = 0; col < COL_LIMIT; col++)
+                if (board[row][col] === null)
                     return null
         }
         return "tie"
@@ -183,8 +188,8 @@ class Game extends Component {
     }
 
     renderHeader = () => {
-        let stylePlayer1 = this.state.curPlayer === "player1" ? "player1_name currentPlayer" : "player1_name"
-        let stylePlayer2 = this.state.curPlayer === "player2" ? "player2_name currentPlayer" : "player2_name"
+        let stylePlayer1 = this.state.curPlayer === "player1" ? "player1_name highlight1" : "player1_name"
+        let stylePlayer2 = this.state.curPlayer === "player2" ? "player2_name highlight2" : "player2_name"
 
         return (
             <div className="header">
