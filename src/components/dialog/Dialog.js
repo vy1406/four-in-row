@@ -8,14 +8,15 @@ class Dialog extends Component {
         return (
             <div className="dialog-container">
                 <div className="dialog">
-
-                    <label className="username-label" htmlFor="username">
-                        {msg}
-                    </label>
-                    <button className="submit-btn">
-                        Submit
-                    </button>
-
+                    <div className="dialog-form">
+                        <label className="winner-text">
+                            {msg}
+                        </label>
+                        <br></br>
+                        <button className="new-game-btn" onClick={this.props.newGame}>
+                            New Game
+                        </button>
+                    </div>
                 </div>
             </div>
         )

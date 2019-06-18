@@ -12,7 +12,7 @@ class Game extends Component {
         this.state = {
             board: [],
             curPlayer: "player1",
-            isGameOver: false,
+            isGameOver: true,
             msg: "dummy msg"
         }
     }
@@ -67,31 +67,30 @@ class Game extends Component {
         let winner = ""
 
         winner = this.checkVertical()
-        if ( winner === "player1" || winner === "player2") this.showDialog(winner)
+        if (winner === "player1" || winner === "player2") this.showDialog(winner)
 
         winner = this.checkHorizontal()
-        if ( winner === "player1" || winner === "player2") this.showDialog(winner)
+        if (winner === "player1" || winner === "player2") this.showDialog(winner)
 
         winner = this.checkDiagonalFromLeft()
-        if ( winner === "player1" || winner === "player2") this.showDialog(winner)
+        if (winner === "player1" || winner === "player2") this.showDialog(winner)
 
         winner = this.checkDiagonalFromRight()
-        if ( winner === "player1" || winner === "player2") this.showDialog(winner)
+        if (winner === "player1" || winner === "player2") this.showDialog(winner)
     }
-    
+
     showDialog = winner => {
         let msg = ""
         if (winner !== undefined) {
             if (winner === "tie")
                 msg = "Its a tie!"
             if (winner === "player1")
-                msg = "player1 won"
+                msg = "player1 won!"
             if (winner === "player2")
-                msg = "player2 won"
+                msg = "player2 won!"
 
-            this.setState({ msg , isGameOver: true})
+            this.setState({ msg, isGameOver: true })
         }
-        console.log(this.state.msg)
     }
 
     checkTie = () => {
@@ -99,7 +98,7 @@ class Game extends Component {
         let board = this.state.board
         for (let row = 3; row < ROW_LIMIT; row++) {
             for (let col = 3; col < COL_LIMIT; col++)
-                if (board[row][col] !== "player1" || board[row][col] !== "player1") 
+                if (board[row][col] !== "player1" || board[row][col] !== "player1")
                     return null
         }
         return "tie"
@@ -151,6 +150,15 @@ class Game extends Component {
         return null
     }
 
+    newGame = () => {
+        this.initializeBoard()
+        this.setState({
+            curPlayer: "player1",
+            isGameOver: false,
+            msg: ""
+        })
+    }
+
     checkHorizontal = () => {
         let board = this.state.board
         for (let row = 0; row < ROW_LIMIT; row++) {
@@ -188,7 +196,7 @@ class Game extends Component {
             <div>
                 {this.renderHeader()}
                 {this.renderBoard()}
-                {this.state.isGameOver ? <Dialog msg={this.state.msg} /> : null}
+                {this.state.isGameOver ? <Dialog msg={this.state.msg} newGame={this.newGame} /> : null}
             </div>
         )
     }
