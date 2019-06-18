@@ -12,7 +12,7 @@ class Game extends Component {
         this.state = {
             board: [],
             curPlayer: "player1",
-            isGameOver: true,
+            isGameOver: false,
             msg: "dummy msg"
         }
     }
@@ -175,10 +175,13 @@ class Game extends Component {
     }
 
     renderHeader = () => {
+        let stylePlayer1 = this.state.curPlayer === "player1" ? "player1_name currentPlayer" : "player1_name"
+        let stylePlayer2 = this.state.curPlayer === "player2" ? "player2_name currentPlayer" : "player2_name"
+
         return (
             <div className="header">
-                <div className="player1_name">Player 1</div>
-                <div className="player2_name">Player 2</div>
+                <div className={stylePlayer1}>Player 1</div>
+                <div className={stylePlayer2}>Player 2</div>
             </div>
         )
     }
@@ -186,14 +189,18 @@ class Game extends Component {
     renderBoard = () => {
         return (
             <div className="board">
-                {this.state.board.map((row, i) => <Row key={i} row={row} dropCoin={this.dropCoin} />)}
+                {this.state.board.map((row, i) => <Row
+                    key={i}
+                    row={row}
+                    dropCoin={this.dropCoin}
+                />)}
             </div>
         )
     }
 
     render() {
         return (
-            <div>
+            <div className="game">
                 {this.renderHeader()}
                 {this.renderBoard()}
                 {this.state.isGameOver ? <Dialog msg={this.state.msg} newGame={this.newGame} /> : null}

@@ -16,7 +16,7 @@ class Cell extends Component {
     render() {
         const cellType = this.getCellType()
         return (
-            <div className="cell" onClick={this.dropCoin}>
+            <div className="cell" onClick={this.dropCoin} >
                 <div className={cellType}></div>
             </div>
         )

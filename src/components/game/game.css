@@ -1,3 +1,6 @@
+.game{
+    font-family: 'Indie Flower', cursive;
+}
 .header{
     display: grid;
     grid-template-areas: "p1 . . p2";
@@ -5,13 +8,18 @@
 
 .player1_name{
     grid-area: p1;
-    background-color: blueviolet;
+    background-color: #ff7675;
 }
+
 .player2_name{
     grid-area: p2;
-    background-color: palevioletred;
+    background-color: #74b9ff;
 }
 
 .board{
     padding:5px;
+}
+
+.currentPlayer{
+    box-shadow:  0px 30px 18px  #81ecec ; 
 }
