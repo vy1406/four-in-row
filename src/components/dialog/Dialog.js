@@ -5,10 +5,13 @@ class Dialog extends Component {
 
     render() {
         const { msg } = this.props
+
+        let msg_form_type_css = "dialog-form " + this.props.dialogType
+        
         return (
             <div className="dialog-container">
                 <div className="dialog">
-                    <div className="dialog-form">
+                    <div className={msg_form_type_css}>
                         <label className="winner-text">
                             {msg}
                         </label>

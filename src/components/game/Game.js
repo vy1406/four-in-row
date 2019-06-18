@@ -13,7 +13,8 @@ class Game extends Component {
             board: [],
             curPlayer: "player1",
             isGameOver: false,
-            msg: "dummy msg"
+            msg: "dummy msg",
+            dialogType: "" // will change the background of the dialog according to the endGame
         }
     }
 
@@ -81,15 +82,22 @@ class Game extends Component {
 
     showDialog = winner => {
         let msg = ""
+        let dialogType = ""
         if (winner !== undefined) {
-            if (winner === "tie")
+            if (winner === "tie") {
                 msg = "Its a tie!"
-            if (winner === "player1")
+                dialogType = "tie-dialog"
+            }
+            if (winner === "player1") {
                 msg = "player1 won!"
-            if (winner === "player2")
+                dialogType = "player1-won-dialog"
+            }
+            if (winner === "player2") {
                 msg = "player2 won!"
+                dialogType = "player2-won-dialog"
+            }
 
-            this.setState({ msg, isGameOver: true })
+            this.setState({ msg, isGameOver: true , dialogType})
         }
     }
 
@@ -203,7 +211,13 @@ class Game extends Component {
             <div className="game">
                 {this.renderHeader()}
                 {this.renderBoard()}
-                {this.state.isGameOver ? <Dialog msg={this.state.msg} newGame={this.newGame} /> : null}
+                {this.state.isGameOver ?
+                    <Dialog
+                        dialogType={this.state.dialogType}
+                        msg={this.state.msg}
+                        newGame={this.newGame} />
+                    :
+                    null}
             </div>
         )
     }
