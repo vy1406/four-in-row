@@ -36,11 +36,11 @@ class Game extends Component {
         })
     }
 
-    dropCoin = async (column) => {
+    dropCoin =  (column) => {
         let board = this.dropCoinOnFirstFreeCell(column)
         this.changeNextPlayer()
 
-        await this.setState({
+         this.setState({
             board
         })
 
