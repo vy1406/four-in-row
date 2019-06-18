@@ -1,3 +1,17 @@
+.header{
+    display: grid;
+    grid-template-areas: "p1 . . p2";
+}
+
+.player1{
+    grid-area: p1;
+    background-color: blueviolet;
+}
+.player2{
+    grid-area: p2;
+    background-color: palevioletred;
+}
+
 .board{
-    
+    padding:5px;
 }

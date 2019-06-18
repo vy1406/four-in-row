@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Cell from '../cell/Cell';
 import './row.css';
+
 class Row extends Component {
 
     render() {

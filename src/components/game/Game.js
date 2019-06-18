@@ -42,7 +42,10 @@ class Game extends Component {
 
     renderHeader = () => {
         return (
-            <div className="header">HEADER</div>
+            <div className="header">
+                <div className="player1">Player 1</div>
+                <div className="player2">Player 2</div>
+            </div>
         )
     }
 
