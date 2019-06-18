@@ -35,12 +35,15 @@ class Game extends Component {
         })
     }
 
-    dropCoin = (column) => {
+    dropCoin = async (column) => {
         let board = this.dropCoinOnFirstFreeCell(column)
         this.changeNextPlayer()
-        this.setState({
+
+        await this.setState({
             board
         })
+
+        this.checkEndGame()
     }
 
     changeNextPlayer = () => {
@@ -49,30 +52,118 @@ class Game extends Component {
     }
 
     dropCoinOnFirstFreeCell = (col) => {
+        let tempBoard = this.state.board
         if (!this.state.isGameOver) {
-            let tempBoard = this.state.board
             for (let i = ROW_LIMIT - 1; i >= 0; i--)
                 if (!tempBoard[i][col]) {
                     tempBoard[i][col] = this.state.curPlayer
                     break
                 }
-            this.checkEndGame()
-            return tempBoard
         }
+        return tempBoard
     }
 
     checkEndGame = () => {
-        this.checkVertical()
-        this.checkHorizontal()
-        this.checkDiagonal()
-        // this.setState({isGameOver : true})
+        let winner = ""
+
+        winner = this.checkVertical()
+        if ( winner === "player1" || winner === "player2") this.showDialog(winner)
+
+        winner = this.checkHorizontal()
+        if ( winner === "player1" || winner === "player2") this.showDialog(winner)
+
+        winner = this.checkDiagonalFromLeft()
+        if ( winner === "player1" || winner === "player2") this.showDialog(winner)
+
+        winner = this.checkDiagonalFromRight()
+        if ( winner === "player1" || winner === "player2") this.showDialog(winner)
+    }
+    
+    showDialog = winner => {
+        let msg = ""
+        if (winner !== undefined) {
+            if (winner === "tie")
+                msg = "Its a tie!"
+            if (winner === "player1")
+                msg = "player1 won"
+            if (winner === "player2")
+                msg = "player2 won"
+
+            this.setState({ msg , isGameOver: true})
+        }
+        console.log(this.state.msg)
+    }
+
+    checkTie = () => {
+        // check if all the cell are with player1 or player2
+        let board = this.state.board
+        for (let row = 3; row < ROW_LIMIT; row++) {
+            for (let col = 3; col < COL_LIMIT; col++)
+                if (board[row][col] !== "player1" || board[row][col] !== "player1") 
+                    return null
+        }
+        return "tie"
+    }
+
+    checkDiagonalFromRight = () => {
+        let board = this.state.board
+        for (let row = 3; row < ROW_LIMIT; row++) {
+            for (let col = 3; col < COL_LIMIT; col++)
+                if (board[row][col]) // check if player there, if yes -> check if others are the same.
+                    if (
+                        board[row][col] === board[row - 1][col + 1] &&
+                        board[row][col] === board[row - 2][col + 2] &&
+                        board[row][col] === board[row - 3][col + 3]
+                    )
+                        return board[row][col]
+        }
+        return null
+    }
+
+    checkDiagonalFromLeft = () => {
+        let board = this.state.board
+        for (let row = 3; row < ROW_LIMIT; row++) {
+            for (let col = 3; col < COL_LIMIT; col++)
+                if (board[row][col]) // check if player there, if yes -> check if others are the same.
+                    if (
+                        board[row][col] === board[row - 1][col - 1] &&
+                        board[row][col] === board[row - 2][col - 2] &&
+                        board[row][col] === board[row - 3][col - 3]
+                    )
+                        return board[row][col]
+        }
+        return null
     }
 
     checkVertical = () => {
-        // for (let row = 0; row < ROW_LIMIT; row++) {
-        //     for (let col = 0; col < COL_LIMIT; col)
-            
-        // }
+        let board = this.state.board
+        for (let row = 3; row < ROW_LIMIT; row++) {
+            for (let col = 0; col < COL_LIMIT; col++) {
+                if (board[row][col]) // check if player there, if yes -> check if others are the same.
+                    if (
+                        board[row][col] === board[row - 1][col] &&
+                        board[row][col] === board[row - 2][col] &&
+                        board[row][col] === board[row - 3][col]
+                    )
+                        return board[row][col]
+            }
+        }
+        return null
+    }
+
+    checkHorizontal = () => {
+        let board = this.state.board
+        for (let row = 0; row < ROW_LIMIT; row++) {
+            for (let col = 0; col < COL_LIMIT - 3; col++)
+                if (board[row][col]) // check if player there, if yes -> check if others are the same.
+                    if (
+                        board[row][col] === board[row][col + 1] &&
+                        board[row][col] === board[row][col + 2] &&
+                        board[row][col] === board[row][col + 3]
+                    )
+                        return board[row][col]
+        }
+        return null
     }
 
     renderHeader = () => {
