@@ -3,11 +3,11 @@
     grid-template-areas: "p1 . . p2";
 }
 
-.player1{
+.player1_name{
     grid-area: p1;
     background-color: blueviolet;
 }
-.player2{
+.player2_name{
     grid-area: p2;
     background-color: palevioletred;
 }
